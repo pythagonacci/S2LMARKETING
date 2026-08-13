@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bluewater Custom Pools — Lead Response Automation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Demo page wrapper only — not part of the drop-in */
+  body { margin:0; background:#EDEEF1; display:flex; justify-content:center; padding:56px 20px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SPEED-TO-LEAD — RESPONSE AUTOMATION HERO
+     A new website lead is read, qualified over SMS, booked, and
+     handed to the team. Five steps, one continuous loop.
+     Copy from <section class="slr-hero"> through the <style> block.
+     ═══════════════════════════════════════════════════════════════ -->
+
+<section class="slr-hero" aria-label="Product screenshot: a new website lead answered by SMS, qualified, booked, and handed off to the design team">
+<div class="slr-app">
+
+  <!-- Slim icon rail -->
+  <aside class="slr-rail">
+    <span class="slr-logo-mark">BW</span>
+    <nav class="slr-rail-nav">
+      <span class="slr-rail-item" title="Home"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg></span>
+      <span class="slr-rail-item slr-rail-active" title="Leads"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"/></svg></span>
+      <span class="slr-rail-item" title="Automations"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></span>
+      <span class="slr-rail-item" title="Calendar"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>
+      <span class="slr-rail-item" title="Contacts"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg></span>
+    </nav>
+    <span class="slr-rail-item slr-rail-bottom" title="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></svg></span>
+  </aside>
+
+  <!-- Main -->
+  <div class="slr-main">
+
+    <!-- Top bar -->
+    <header class="slr-topbar">
+      <span class="slr-run">
+        <i class="slr-run-dot"></i>
+        <span class="slr-run-step" id="stepLabel">Ready</span>
+        <b class="slr-run-sep"></b>
+        <span class="slr-run-status" id="statusLabel" aria-live="polite">Waiting for a new lead</span>
+      </span>
+      <button class="slr-btn" id="replayButton" type="button">
+        <svg viewBox="0 0 24 24"><path d="M20 11.5a8 8 0 1 1-2.6-5.9"/><path d="M20 3.5v5h-5"/></svg>
+        Replay
+      </button>
+      <span class="slr-avatar">MR</span>
+    </header>
+
+    <!-- Body: step sidebar · canvas -->
+    <div class="slr-work">
+
+      <!-- Sidebar -->
+      <aside class="slr-side">
+        <div class="slr-side-org">
+          <span class="slr-side-org-name">Bluewater Pools</span>
+          <svg viewBox="0 0 24 24" style="width:12px;height:12px;"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+
+        <div class="slr-side-label">Lead response</div>
+
+        <div class="slr-step" data-step="1">
+          <span class="slr-step-num">1</span>
+          <span class="slr-step-name">Form received</span>
+        </div>
+        <div class="slr-step" data-step="2">
+          <span class="slr-step-num">2</span>
+          <span class="slr-step-name">Details read</span>
+        </div>
+        <div class="slr-step" data-step="3">
+          <span class="slr-step-num">3</span>
+          <span class="slr-step-name">Context applied</span>
+        </div>
+        <div class="slr-step" data-step="4">
+          <span class="slr-step-num">4</span>
+          <span class="slr-step-name">Texting the lead</span>
+        </div>
+        <div class="slr-step" data-step="5">
+          <span class="slr-step-num">5</span>
+          <span class="slr-step-name">Team alerted</span>
+        </div>
+
+        <div class="slr-side-stat">
+          <span>First reply</span>
+          <strong>11s</strong>
+          <em>after the form was submitted</em>
+        </div>
+      </aside>
+
+      <!-- Canvas -->
+      <div class="slr-canvas">
+
+        <!-- Idle -->
+        <section class="slr-scene slr-scene-center slr-active" id="waitingScene">
+          <div class="slr-empty">
+            <span class="slr-empty-icon"><i></i></span>
+            <strong>Waiting for a new lead</strong>
+            <p>Website form submissions land here the moment they're sent.</p>
+          </div>
+        </section>
+
+        <!-- Step 1 — form -->
+        <section class="slr-scene" id="formScene">
+          <div class="slr-doc">
+            <div class="slr-head">
+              <div>
+                <div class="slr-eyebrow">New website form submission</div>
+                <h2>Sarah Mitchell</h2>
+              </div>
+              <span class="slr-chip">Received just now</span>
+            </div>
+
+            <div class="slr-fields">
+              <div class="slr-field"><span>Phone</span><strong>(919) 555-0148</strong></div>
+              <div class="slr-field"><span>Email</span><strong>sarah.m@example.com</strong></div>
+              <div class="slr-field"><span>Property</span><strong>Cary, NC</strong></div>
+              <div class="slr-field"><span>Project</span><strong>Custom pool and spa</strong></div>
+              <div class="slr-field"><span>Budget</span><strong>$120k–$160k</strong></div>
+              <div class="slr-field"><span>Timeline</span><strong>Before next summer</strong></div>
+            </div>
+
+            <div class="slr-quote">
+              <div class="slr-quote-label">Customer message</div>
+              <p>We want a custom inground pool with an attached spa and tanning ledge. We're early in planning and would like to understand the next steps.</p>
+            </div>
+
+            <div class="slr-foot">
+              <span class="slr-src-dot"></span>
+              Bluewater.com · Request a quote form
+            </div>
+          </div>
+        </section>
+
+        <!-- Step 2 — reading -->
+        <section class="slr-scene" id="readingScene">
+          <div class="slr-doc">
+            <div class="slr-head">
+              <div>
+                <div class="slr-eyebrow">Reading the submission</div>
+                <h2>Understanding Sarah's project</h2>
+              </div>
+              <span class="slr-chip">4 details found</span>
+            </div>
+
+            <p class="slr-lede">The form is read once, so nothing already answered gets asked again.</p>
+
+            <div class="slr-progress"><i class="slr-progress-fill"></i></div>
+
+            <div class="slr-working">
+              <span class="slr-dots"><i></i><i></i><i></i></span>
+              Extracting customer and project details
+            </div>
+
+            <div class="slr-extract">
+              <div class="slr-extract-row" id="extract1"><span>Project</span><strong>Pool, spa and tanning ledge</strong></div>
+              <div class="slr-extract-row" id="extract2"><span>Location</span><strong>Cary, NC</strong></div>
+              <div class="slr-extract-row" id="extract3"><span>Budget</span><strong>$120k–$160k</strong></div>
+              <div class="slr-extract-row" id="extract4"><span>Timeline</span><strong>Before next summer</strong></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Step 3 — context -->
+        <section class="slr-scene" id="contextScene">
+          <div class="slr-doc">
+            <div class="slr-head">
+              <div>
+                <div class="slr-eyebrow">Preparing the reply</div>
+                <h2>Using Bluewater's own information</h2>
+              </div>
+              <span class="slr-chip">Selected context</span>
+            </div>
+
+            <div class="slr-ctx-grid">
+              <section class="slr-ctx">
+                <div class="slr-ctx-head">
+                  <strong>Company information</strong>
+                  <span>24 more</span>
+                </div>
+                <div class="slr-ctx-row" id="company1">
+                  <i class="slr-ctx-dot"></i>
+                  <div>
+                    <strong>What you build</strong>
+                    <p>Custom gunite pools, attached spas, tanning ledges, water features.</p>
+                  </div>
+                </div>
+                <div class="slr-ctx-row" id="company2">
+                  <i class="slr-ctx-dot"></i>
+                  <div>
+                    <strong>Service area</strong>
+                    <p>Cary sits inside the active design and build area.</p>
+                  </div>
+                </div>
+                <div class="slr-ctx-row" id="company3">
+                  <i class="slr-ctx-dot"></i>
+                  <div>
+                    <strong>Open consultations</strong>
+                    <p>Wednesday 4:30 PM or Friday 11:00 AM.</p>
+                  </div>
+                </div>
+              </section>
+
+              <section class="slr-ctx">
+                <div class="slr-ctx-head">
+                  <strong>Your qualifying steps</strong>
+                  <span>11 more</span>
+                </div>
+                <div class="slr-ctx-row" id="guide1">
+                  <span class="slr-ctx-num">1</span>
+                  <div>
+                    <strong>Use what she sent</strong>
+                    <p>Never ask Sarah to repeat something the form already answered.</p>
+                  </div>
+                </div>
+                <div class="slr-ctx-row" id="guide2">
+                  <span class="slr-ctx-num">2</span>
+                  <div>
+                    <strong>Confirm the fit</strong>
+                    <p>Check property ownership and clear backyard access.</p>
+                  </div>
+                </div>
+                <div class="slr-ctx-row" id="guide3">
+                  <span class="slr-ctx-num">3</span>
+                  <div>
+                    <strong>Book the next step</strong>
+                    <p>Offer a real opening for an on-site design consultation.</p>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <!-- Step 4 — conversation -->
+        <section class="slr-scene slr-scene-convo" id="conversationScene">
+          <div class="slr-doc slr-doc-flush">
+            <div class="slr-head">
+              <div>
+                <div class="slr-eyebrow">Lead being handled</div>
+                <h2>Sarah Mitchell</h2>
+              </div>
+              <span class="slr-chip slr-chip-live"><i></i>SMS active</span>
+            </div>
+
+            <div class="slr-list">
+              <div><span>Project</span><strong>Pool, spa and tanning ledge</strong></div>
+              <div><span>Budget</span><strong>$120k–$160k</strong></div>
+              <div><span>Property</span><strong>Cary, NC</strong></div>
+              <div><span>Timeline</span><strong>Before next summer</strong></div>
+            </div>
+
+            <div class="slr-source">
+              <div class="slr-quote-label">Replying with</div>
+              <div class="slr-source-row"><i></i>Her website submission</div>
+              <div class="slr-source-row"><i></i>Bluewater company information</div>
+              <div class="slr-source-row"><i></i>Bluewater qualifying steps</div>
+            </div>
+          </div>
+
+          <aside class="slr-phone-area" aria-label="SMS conversation on Sarah's phone">
+            <div class="slr-phone-cap">What Sarah sees</div>
+            <div class="slr-phone">
+              <div class="slr-screen">
+                <div class="slr-notch"></div>
+                <div class="slr-statusbar"><span>10:01</span><span>SMS</span></div>
+
+                <div class="slr-phone-head">
+                  <span class="slr-phone-av">BW</span>
+                  <div>
+                    <strong>Bluewater Custom Pools</strong>
+                    <span>Text message</span>
+                  </div>
+                </div>
+
+                <div class="slr-thread" id="phoneThread">
+                  <div class="slr-msg slr-msg-biz slr-hidden" id="message1">
+                    Hi Sarah — thanks for reaching out to Bluewater. A pool, spa and tanning ledge in Cary sounds like a great project. Quick check before we schedule a designer: do you own the property, and is there clear access from the street to the backyard?
+                  </div>
+                  <div class="slr-msg slr-msg-cust slr-hidden" id="message2">
+                    Yes, we own the home. There's open access along the left side of the house.
+                  </div>
+                  <div class="slr-msg slr-msg-biz slr-hidden" id="message3">
+                    Perfect. The next step is an on-site design consultation — a designer walks the yard with you and goes through layout, features and timeline.
+                  </div>
+                  <div class="slr-msg slr-msg-biz slr-hidden" id="message4">
+                    We have Wednesday at 4:30 PM or Friday at 11:00 AM open. Would either work?
+                  </div>
+                  <div class="slr-msg slr-msg-cust slr-hidden" id="message5">
+                    Wednesday at 4:30 works.
+                  </div>
+                  <div class="slr-msg slr-msg-biz slr-hidden" id="message6">
+                    You're booked for Wednesday at 4:30 PM. A Bluewater designer will meet you at the Cary property. Confirmation is on its way.
+                  </div>
+                  <div class="slr-typing slr-hidden" id="phoneTyping"><i></i><i></i><i></i></div>
+                </div>
+
+                <div class="slr-compose">
+                  <div>Text Message</div>
+                  <span><svg viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></span>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <!-- Step 5 — team alert (no phone) -->
+        <section class="slr-scene slr-scene-center" id="alertScene">
+          <div class="slr-alert">
+            <div class="slr-alert-top">
+              <span class="slr-alert-icon">
+                <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+              </span>
+              <div class="slr-alert-title">
+                <div class="slr-eyebrow">Team alert</div>
+                <h2>Consultation booked</h2>
+              </div>
+              <span class="slr-chip slr-chip-green">Just now</span>
+            </div>
+
+            <div class="slr-alert-grid">
+              <div class="slr-field"><span>Customer</span><strong>Sarah Mitchell</strong></div>
+              <div class="slr-field"><span>Consultation</span><strong>Wednesday · 4:30 PM</strong></div>
+              <div class="slr-field"><span>Property</span><strong>Cary, NC</strong></div>
+              <div class="slr-field"><span>Budget</span><strong>$120k–$160k</strong></div>
+            </div>
+
+            <div class="slr-quote">
+              <div class="slr-quote-label">Project</div>
+              <p>Custom pool, attached spa and tanning ledge. Homeowner confirmed, clear access along the left side of the property.</p>
+            </div>
+
+            <div class="slr-note">
+              <div class="slr-quote-label">Prep note for the designer</div>
+              <p>Walk the backyard access, then cover pool placement, spa layout, tanning ledge and the build timeline.</p>
+            </div>
+
+            <div class="slr-alert-foot">
+              <span class="slr-avatars"><b>MR</b><b class="slr-av-2">DT</b></span>
+              Sent to Mike R. and the design team · SMS and email
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<style>
+/* ══════════ SPEED-TO-LEAD RESPONSE HERO ══════════ */
+.slr-hero{
+  --slr-bg:#FFFFFF;
+  --slr-page:#F5F6F8;
+  --slr-ink:#111318;
+  --slr-body:#3D4149;
+  --slr-muted:#6E7480;
+  --slr-faint:#9AA0AB;
+  --slr-line:#E7E8EB;
+  --slr-line-strong:#D6D8DD;
+  --slr-dark:#16181D;
+  --slr-blue:#1565F0;
+  --slr-blue-bg:#EFF4FE;
+  --slr-green-t:#1F7A40;
+  --slr-green-bg:#EAF5EE;
+  --slr-green-line:#CBE7D4;
+  --slr-sans:'Inter',-apple-system,'Segoe UI',system-ui,sans-serif;
+  font-family:var(--slr-sans);
+  color:var(--slr-ink);
+  width:100%;
+  max-width:1180px;
+  -webkit-font-smoothing:antialiased;
+}
+.slr-hero *{box-sizing:border-box;margin:0;padding:0;}
+.slr-hero svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none;}
+
+.slr-app{
+  display:grid;
+  grid-template-columns:64px 1fr;
+  background:var(--slr-bg);
+  border:1px solid var(--slr-line);
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 1px 2px rgba(17,19,24,.05), 0 24px 56px -24px rgba(17,19,24,.18);
+}
+
+/* Icon rail */
+.slr-rail{
+  display:flex;flex-direction:column;align-items:center;
+  padding:14px 0 16px;gap:6px;
+  border-right:1px solid var(--slr-line);
+  background:var(--slr-bg);
+}
+.slr-logo-mark{
+  width:32px;height:32px;border-radius:9px;
+  background:var(--slr-blue);color:#fff;
+  font-size:11px;font-weight:700;letter-spacing:-.01em;
+  display:inline-flex;align-items:center;justify-content:center;
+  margin-bottom:14px;
+}
+.slr-rail-nav{display:flex;flex-direction:column;gap:6px;}
+.slr-rail-item{
+  width:38px;height:38px;border-radius:10px;
+  display:inline-flex;align-items:center;justify-content:center;
+  color:var(--slr-muted);
+}
+.slr-rail-item svg{width:18px;height:18px;}
+.slr-rail-active{background:var(--slr-dark);color:#fff;}
+.slr-rail-bottom{margin-top:auto;}
+
+/* Main */
+.slr-main{display:flex;flex-direction:column;min-width:0;background:var(--slr-page);}
+
+/* Top bar */
+.slr-topbar{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 20px;
+  background:var(--slr-bg);
+  border-bottom:1px solid var(--slr-line);
+}
+.slr-run{
+  display:inline-flex;align-items:center;gap:10px;min-width:0;
+  border:1px solid var(--slr-line-strong);border-radius:10px;
+  padding:7px 14px;
+  background:var(--slr-bg);
+  box-shadow:0 1px 2px rgba(17,19,24,.04);
+}
+.slr-run-dot{
+  width:7px;height:7px;border-radius:50%;flex:none;
+  background:var(--slr-blue);
+  animation:slr-pulse 1.8s infinite ease-in-out;
+}
+.slr-run-step{font-size:12px;font-weight:600;color:var(--slr-ink);white-space:nowrap;}
+.slr-run-sep{width:1px;height:13px;background:var(--slr-line);flex:none;}
+.slr-run-status{
+  font-size:12.5px;color:var(--slr-muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.slr-btn{
+  margin-left:auto;
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:inherit;font-size:13px;font-weight:600;color:var(--slr-body);
+  border:1px solid var(--slr-line-strong);border-radius:8px;padding:7px 13px;
+  background:var(--slr-bg);white-space:nowrap;cursor:pointer;
+}
+.slr-btn svg{width:14px;height:14px;color:var(--slr-muted);}
+.slr-btn:hover{background:#F7F8FA;}
+.slr-btn:focus-visible{outline:2px solid var(--slr-blue);outline-offset:2px;}
+.slr-avatar{
+  width:34px;height:34px;border-radius:50%;flex:none;
+  background:#EDEFF2;color:var(--slr-body);border:1px solid var(--slr-line-strong);
+  font-size:11.5px;font-weight:600;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+
+/* Body */
+.slr-work{display:grid;grid-template-columns:232px 1fr;}
+
+/* Step sidebar */
+.slr-side{
+  border-right:1px solid var(--slr-line);
+  background:var(--slr-bg);
+  padding:16px 12px;
+  display:flex;flex-direction:column;gap:2px;
+}
+.slr-side-org{
+  display:flex;justify-content:space-between;align-items:center;gap:8px;
+  font-size:13px;font-weight:600;letter-spacing:-.01em;
+  white-space:nowrap;overflow:hidden;
+  border:1px solid var(--slr-line-strong);border-radius:8px;
+  padding:8px 11px;margin-bottom:10px;
+  box-shadow:0 1px 2px rgba(17,19,24,.04);
+}
+.slr-side-org-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.slr-side-org svg{color:var(--slr-faint);}
+.slr-side-label{
+  font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--slr-faint);
+  padding:10px 10px 7px;
+}
+.slr-step{
+  display:flex;align-items:center;gap:10px;
+  padding:7px 10px;border-radius:8px;
+  transition:background .25s ease, box-shadow .25s ease;
+}
+.slr-step-num{
+  width:19px;height:19px;border-radius:6px;flex:none;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:#F1F2F4;color:var(--slr-faint);
+  font-size:10px;font-weight:700;
+  transition:background .25s ease, color .25s ease;
+}
+.slr-step-name{
+  font-size:13px;font-weight:500;color:var(--slr-faint);
+  transition:color .25s ease;
+}
+.slr-step-done .slr-step-num{background:var(--slr-green-bg);color:var(--slr-green-t);}
+.slr-step-done .slr-step-name{color:var(--slr-body);}
+.slr-step-active{background:#F4F5F7;box-shadow:inset 0 0 0 1px var(--slr-line);}
+.slr-step-active .slr-step-num{background:var(--slr-dark);color:#fff;}
+.slr-step-active .slr-step-name{color:var(--slr-ink);font-weight:600;}
+.slr-side-stat{
+  margin-top:auto;
+  border:1px solid var(--slr-line);border-radius:10px;
+  padding:11px 12px;background:#FCFCFD;
+}
+.slr-side-stat span{
+  display:block;font-size:10.5px;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--slr-faint);
+}
+.slr-side-stat strong{
+  display:block;margin-top:4px;
+  font-size:20px;font-weight:600;letter-spacing:-.02em;color:var(--slr-blue);
+}
+.slr-side-stat em{
+  display:block;margin-top:2px;
+  font-style:normal;font-size:11px;line-height:1.4;color:var(--slr-muted);
+}
+
+/* Canvas */
+.slr-canvas{
+  background:var(--slr-page);
+  padding:26px 28px;
+  min-height:676px;
+  display:flex;align-items:center;justify-content:center;
+  min-width:0;
+}
+.slr-scene{display:none;width:100%;animation:slr-enter .42s ease both;}
+.slr-scene.slr-active{display:block;}
+.slr-scene-center.slr-active{display:flex;align-items:center;justify-content:center;}
+
+/* Document card — one frame for every step */
+.slr-doc{
+  width:100%;max-width:824px;margin:0 auto;
+  background:var(--slr-bg);
+  border:1px solid var(--slr-line);
+  border-radius:14px;
+  box-shadow:0 1px 3px rgba(17,19,24,.06);
+  padding:32px 36px 30px;
+  height:fit-content;
+}
+.slr-doc-flush{max-width:none;margin:0;}
+
+.slr-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;}
+.slr-head h2{font-size:25px;font-weight:700;letter-spacing:-.025em;margin-top:8px;}
+.slr-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--slr-faint);
+}
+.slr-chip{
+  flex:none;
+  font-size:12px;font-weight:600;
+  color:var(--slr-body);background:#F4F5F7;
+  border:1px solid var(--slr-line);border-radius:7px;
+  padding:5px 11px;white-space:nowrap;
+}
+.slr-chip-live{display:inline-flex;align-items:center;gap:6px;color:var(--slr-blue);background:var(--slr-blue-bg);border-color:#D8E4FC;}
+.slr-chip-live i{width:6px;height:6px;border-radius:50%;background:var(--slr-blue);animation:slr-pulse 1.8s infinite ease-in-out;}
+.slr-chip-green{color:var(--slr-green-t);background:var(--slr-green-bg);border-color:var(--slr-green-line);}
+.slr-lede{margin-top:14px;font-size:15px;line-height:1.6;color:var(--slr-body);max-width:56ch;}
+
+/* Field cells */
+.slr-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px;}
+.slr-field{
+  min-width:0;
+  border:1px solid var(--slr-line);border-radius:11px;
+  padding:13px 15px;
+}
+.slr-field span{display:block;font-size:12px;font-weight:500;color:var(--slr-muted);}
+.slr-field strong{
+  display:block;margin-top:5px;
+  font-size:15px;font-weight:600;letter-spacing:-.015em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+
+/* Quote / note blocks */
+.slr-quote,
+.slr-note{
+  margin-top:14px;
+  border:1px solid var(--slr-line);border-radius:11px;
+  padding:15px 17px;background:#FCFCFD;
+}
+.slr-note{background:var(--slr-blue-bg);border-color:#DDE7FC;}
+.slr-quote-label{
+  font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--slr-faint);
+}
+.slr-quote p,
+.slr-note p{margin-top:7px;font-size:14.5px;line-height:1.6;color:var(--slr-body);}
+.slr-foot{
+  display:flex;align-items:center;gap:9px;
+  margin-top:20px;padding-top:15px;border-top:1px solid #F1F2F4;
+  font-size:12.5px;color:var(--slr-muted);
+}
+.slr-src-dot{width:6px;height:6px;border-radius:50%;background:var(--slr-blue);flex:none;}
+
+/* Progress + extraction */
+.slr-progress{
+  height:7px;margin-top:24px;
+  overflow:hidden;border-radius:999px;background:#EDEFF3;
+}
+.slr-progress-fill{
+  display:block;width:100%;height:100%;
+  background:var(--slr-blue);
+  transform-origin:left;
+  animation:slr-fill 2.4s ease both;
+}
+.slr-working{
+  display:flex;align-items:center;gap:10px;
+  margin-top:13px;
+  font-size:13px;font-weight:500;color:var(--slr-muted);
+}
+.slr-dots{display:inline-flex;gap:3px;}
+.slr-dots i,
+.slr-typing i{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--slr-blue);
+  animation:slr-dot 1s infinite ease-in-out;
+}
+.slr-dots i:nth-child(2),.slr-typing i:nth-child(2){animation-delay:.14s;}
+.slr-dots i:nth-child(3),.slr-typing i:nth-child(3){animation-delay:.28s;}
+
+.slr-extract{
+  margin-top:22px;
+  border:1px solid var(--slr-line);border-radius:11px;
+  overflow:hidden;
+}
+.slr-extract-row{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:15px 18px;
+  border-top:1px solid var(--slr-line);
+  opacity:.22;transform:translateY(3px);
+  transition:opacity .32s ease, transform .32s ease;
+}
+.slr-extract-row:first-child{border-top:0;}
+.slr-extract-row.slr-visible{opacity:1;transform:translateY(0);}
+.slr-extract-row span{font-size:13px;font-weight:500;color:var(--slr-muted);}
+.slr-extract-row strong{font-size:14.5px;font-weight:600;letter-spacing:-.015em;text-align:right;}
+
+/* Context */
+.slr-ctx-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:22px;}
+.slr-ctx{border:1px solid var(--slr-line);border-radius:12px;padding:16px 18px 6px;}
+.slr-ctx-head{
+  display:flex;align-items:baseline;justify-content:space-between;gap:8px;
+  padding-bottom:11px;
+}
+.slr-ctx-head strong{font-size:14px;font-weight:600;letter-spacing:-.01em;}
+.slr-ctx-head span{font-size:11.5px;color:var(--slr-faint);}
+.slr-ctx-row{
+  display:grid;grid-template-columns:20px 1fr;gap:12px;
+  padding:14px 0;border-top:1px solid #F1F2F4;
+  opacity:.22;transform:translateY(3px);
+  transition:opacity .32s ease, transform .32s ease;
+}
+.slr-ctx-row.slr-visible{opacity:1;transform:translateY(0);}
+.slr-ctx-dot{width:7px;height:7px;margin:7px 0 0 6px;border-radius:50%;background:var(--slr-blue);}
+.slr-ctx-num{
+  width:20px;height:20px;border-radius:6px;margin-top:1px;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--slr-blue-bg);color:var(--slr-blue);
+  font-size:10.5px;font-weight:700;
+}
+.slr-ctx-row strong{display:block;font-size:13.5px;font-weight:600;letter-spacing:-.01em;}
+.slr-ctx-row p{margin-top:4px;font-size:12.5px;line-height:1.55;color:var(--slr-muted);}
+
+/* Conversation layout */
+.slr-scene-convo.slr-active{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 312px;
+  gap:26px;align-items:center;
+  max-width:824px;margin:0 auto;
+}
+.slr-list{
+  margin-top:22px;
+  border:1px solid var(--slr-line);border-radius:10px;overflow:hidden;
+}
+.slr-list > div{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:14px 16px;border-top:1px solid var(--slr-line);
+}
+.slr-list > div:first-child{border-top:0;}
+.slr-list span{font-size:12.5px;font-weight:500;color:var(--slr-muted);}
+.slr-list strong{font-size:14px;font-weight:600;letter-spacing:-.015em;text-align:right;}
+.slr-source{
+  margin-top:14px;
+  border:1px solid var(--slr-line);border-radius:11px;
+  padding:15px 17px;background:#FCFCFD;
+}
+.slr-source-row{
+  display:flex;align-items:center;gap:9px;
+  margin-top:10px;font-size:13.5px;color:var(--slr-body);
+}
+.slr-source-row i{width:5px;height:5px;border-radius:50%;background:var(--slr-faint);flex:none;}
+
+/* Phone */
+.slr-phone-area{display:flex;flex-direction:column;align-items:center;gap:10px;min-width:0;}
+.slr-phone-cap{
+  font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--slr-faint);
+}
+.slr-phone{
+  width:100%;height:572px;
+  border-radius:38px;padding:8px;
+  background:var(--slr-dark);
+  box-shadow:0 18px 40px -20px rgba(17,19,24,.45);
+}
+.slr-screen{
+  position:relative;
+  display:flex;flex-direction:column;
+  width:100%;height:100%;
+  overflow:hidden;border-radius:31px;
+  background:#FBFBFC;
+}
+.slr-notch{
+  position:absolute;top:0;left:50%;z-index:3;
+  width:92px;height:19px;
+  border-radius:0 0 13px 13px;
+  background:var(--slr-dark);
+  transform:translateX(-50%);
+}
+.slr-statusbar{
+  display:flex;justify-content:space-between;
+  padding:7px 18px 5px;
+  font-size:10px;font-weight:500;color:var(--slr-faint);
+}
+.slr-phone-head{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 13px;
+  border-bottom:1px solid var(--slr-line);
+  background:var(--slr-bg);
+}
+.slr-phone-av{
+  width:34px;height:34px;border-radius:50%;flex:none;
+  background:var(--slr-blue);color:#fff;
+  font-size:10.5px;font-weight:700;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.slr-phone-head > div{min-width:0;}
+.slr-phone-head > div strong{display:block;font-size:13px;font-weight:600;letter-spacing:-.01em;}
+.slr-phone-head > div span{display:block;margin-top:1px;font-size:10.5px;color:var(--slr-muted);}
+.slr-thread{
+  display:flex;flex:1;flex-direction:column;gap:8px;
+  padding:14px 12px;
+  overflow-y:auto;scroll-behavior:smooth;
+  scrollbar-width:none;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 15px);
+  mask-image:linear-gradient(to bottom,transparent 0,#000 15px);
+}
+.slr-thread::-webkit-scrollbar{display:none;}
+.slr-msg{
+  max-width:87%;
+  border-radius:15px;
+  padding:10px 12px;
+  font-size:12.5px;line-height:1.5;
+  animation:slr-msg .32s ease both;
+}
+.slr-msg-biz{
+  align-self:flex-start;
+  border:1px solid var(--slr-line);
+  background:var(--slr-bg);color:var(--slr-body);
+  border-radius:14px 14px 14px 4px;
+}
+.slr-msg-cust{
+  align-self:flex-end;
+  background:var(--slr-blue);color:#fff;
+  border-radius:14px 14px 4px 14px;
+}
+.slr-typing{
+  align-self:flex-start;width:fit-content;
+  display:flex;gap:3px;align-items:center;
+  border:1px solid var(--slr-line);border-radius:12px;
+  padding:10px 11px;background:var(--slr-bg);
+}
+.slr-compose{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 10px 11px;
+  border-top:1px solid var(--slr-line);
+  background:var(--slr-bg);
+}
+.slr-compose div{
+  flex:1;
+  border:1px solid var(--slr-line-strong);border-radius:999px;
+  padding:8px 12px;
+  font-size:11px;color:var(--slr-faint);
+}
+.slr-compose span{
+  width:28px;height:28px;border-radius:50%;flex:none;
+  background:var(--slr-dark);color:#fff;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.slr-compose svg{width:13px;height:13px;}
+
+/* Step 5 — alert card */
+.slr-alert{
+  width:100%;max-width:680px;
+  background:var(--slr-bg);
+  border:1px solid var(--slr-green-line);
+  border-radius:12px;
+  box-shadow:0 1px 3px rgba(17,19,24,.06), 0 18px 40px -26px rgba(31,122,64,.35);
+  padding:28px 30px 24px;
+  animation:slr-alert-in .5s cubic-bezier(.2,.7,.3,1) both;
+}
+.slr-alert-top{display:flex;align-items:flex-start;gap:13px;}
+.slr-alert-icon{
+  width:42px;height:42px;border-radius:50%;flex:none;
+  background:var(--slr-green-bg);color:var(--slr-green-t);
+  border:1px solid var(--slr-green-line);
+  display:inline-flex;align-items:center;justify-content:center;
+  animation:slr-ring 2.4s ease-out .35s;
+}
+.slr-alert-icon svg{width:20px;height:20px;stroke-width:2.2;}
+.slr-alert-title{flex:1;min-width:0;}
+.slr-alert-title h2{font-size:24px;font-weight:700;letter-spacing:-.025em;margin-top:7px;}
+.slr-alert-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:22px;}
+.slr-alert-foot{
+  display:flex;align-items:center;gap:10px;
+  margin-top:20px;padding-top:15px;border-top:1px solid #F1F2F4;
+  font-size:12.5px;color:var(--slr-muted);
+}
+.slr-avatars{display:inline-flex;flex:none;}
+.slr-avatars b{
+  width:20px;height:20px;border-radius:50%;
+  background:#EDEFF2;color:var(--slr-body);border:1.5px solid var(--slr-bg);
+  font-size:8.5px;font-weight:700;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.slr-avatars b + b{margin-left:-6px;}
+.slr-av-2{background:var(--slr-blue) !important;color:#fff !important;}
+
+/* Idle */
+.slr-empty{display:flex;flex-direction:column;align-items:center;text-align:center;}
+.slr-empty-icon{
+  display:grid;place-items:center;
+  width:44px;height:44px;margin-bottom:14px;
+  border:1px solid var(--slr-line);border-radius:12px;
+  background:var(--slr-bg);
+  box-shadow:0 1px 2px rgba(17,19,24,.05);
+}
+.slr-empty-icon i{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--slr-blue);
+  animation:slr-pulse 1.7s infinite ease-in-out;
+}
+.slr-empty strong{font-size:14.5px;font-weight:600;}
+.slr-empty p{margin-top:5px;font-size:12.5px;color:var(--slr-muted);}
+
+.slr-hidden{display:none !important;}
+
+/* Motion */
+@keyframes slr-enter{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
+@keyframes slr-alert-in{from{opacity:0;transform:translateY(12px) scale(.985);}to{opacity:1;transform:translateY(0) scale(1);}}
+@keyframes slr-fill{from{transform:scaleX(0);}to{transform:scaleX(1);}}
+@keyframes slr-dot{0%,80%,100%{opacity:.25;transform:translateY(0);}40%{opacity:1;transform:translateY(-2px);}}
+@keyframes slr-msg{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+@keyframes slr-pulse{0%,100%{opacity:.4;transform:scale(.85);}50%{opacity:1;transform:scale(1);}}
+@keyframes slr-ring{0%{box-shadow:0 0 0 0 rgba(31,122,64,.28);}70%{box-shadow:0 0 0 14px rgba(31,122,64,0);}100%{box-shadow:0 0 0 0 rgba(31,122,64,0);}}
+
+/* Responsive */
+@media (max-width:1040px){
+  .slr-work{grid-template-columns:200px 1fr;}
+  .slr-scene-convo.slr-active{grid-template-columns:minmax(0,1fr) 278px;gap:20px;}
+  .slr-phone{height:530px;}
+}
+@media (max-width:860px){
+  .slr-app{grid-template-columns:1fr;}
+  .slr-rail{flex-direction:row;justify-content:flex-start;padding:10px 14px;border-right:none;border-bottom:1px solid var(--slr-line);}
+  .slr-logo-mark{margin-bottom:0;margin-right:8px;}
+  .slr-rail-nav{flex-direction:row;}
+  .slr-rail-bottom{margin-top:0;margin-left:auto;}
+  .slr-work{grid-template-columns:1fr;}
+  .slr-side{border-right:none;border-bottom:1px solid var(--slr-line);}
+  .slr-side-stat{margin-top:12px;}
+  .slr-canvas{padding:20px 16px;min-height:0;}
+  .slr-scene-convo.slr-active{grid-template-columns:1fr;}
+  .slr-phone{width:min(100%,300px);margin:0 auto;}
+  .slr-fields,.slr-ctx-grid,.slr-alert-grid{grid-template-columns:1fr;}
+  .slr-run-status{display:none;}
+  .slr-run-sep{display:none;}
+}
+@media (prefers-reduced-motion:reduce){
+  .slr-hero *,.slr-hero *::before,.slr-hero *::after{
+    animation-duration:.01ms !important;animation-iteration-count:1 !important;
+  }
+}
+</style>
+
+<script>
+(function () {
+  var sceneIds = ["waitingScene","formScene","readingScene","contextScene","conversationScene","alertScene"];
+  var extractionIds = ["extract1","extract2","extract3","extract4"];
+  var contextIds = ["company1","company2","company3","guide1","guide2","guide3"];
+  var messageIds = ["message1","message2","message3","message4","message5","message6"];
+
+  var stepEls = [].slice.call(document.querySelectorAll(".slr-step"));
+  var stepLabel = document.getElementById("stepLabel");
+  var statusLabel = document.getElementById("statusLabel");
+  var thread = document.getElementById("phoneThread");
+
+  var timers = [];
+  var loopTimer;
+  var hasStarted = false;
+
+  function schedule(delay, fn){ timers.push(setTimeout(fn, delay)); }
+  function el(id){ return document.getElementById(id); }
+  function show(id){ el(id).classList.remove("slr-hidden"); scrollThread(); }
+  function hide(id){ el(id).classList.add("slr-hidden"); }
+  function status(text){ statusLabel.textContent = text; }
+
+  function scrollThread(){
+    requestAnimationFrame(function(){ thread.scrollTop = thread.scrollHeight; });
+  }
+
+  function setSteps(current){
+    stepEls.forEach(function (node) {
+      var n = Number(node.dataset.step);
+      node.classList.toggle("slr-step-active", n === current);
+      node.classList.toggle("slr-step-done", n < current);
+    });
+  }
+
+  function setScene(id, step, text){
+    sceneIds.forEach(function (sceneId) {
+      el(sceneId).classList.remove("slr-active");
+    });
+    el(id).classList.add("slr-active");
+    stepLabel.textContent = step ? "Step " + step + " of 5" : "Ready";
+    status(text);
+    setSteps(step || 0);
+  }
+
+  function typeThenShow(messageId, text){
+    status(text);
+    show("phoneTyping");
+    schedule(850, function(){
+      hide("phoneTyping");
+      show(messageId);
+    });
+  }
+
+  function reset(){
+    timers.forEach(clearTimeout);
+    timers.length = 0;
+    clearTimeout(loopTimer);
+
+    extractionIds.forEach(function(id){ el(id).classList.remove("slr-visible"); });
+    contextIds.forEach(function(id){ el(id).classList.remove("slr-visible"); });
+    messageIds.forEach(hide);
+    hide("phoneTyping");
+
+    thread.scrollTop = 0;
+    setScene("waitingScene", 0, "Waiting for a new lead");
+  }
+
+  function run(){
+    hasStarted = true;
+    reset();
+
+    schedule(900, function(){ setScene("formScene", 1, "Website form received"); });
+
+    schedule(4300, function(){ setScene("readingScene", 2, "Reading the submission"); });
+    schedule(4750, function(){ el("extract1").classList.add("slr-visible"); });
+    schedule(5200, function(){ el("extract2").classList.add("slr-visible"); });
+    schedule(5650, function(){ el("extract3").classList.add("slr-visible"); });
+    schedule(6100, function(){ el("extract4").classList.add("slr-visible"); });
+
+    schedule(7000, function(){ setScene("contextScene", 3, "Applying company information and steps"); });
+    contextIds.forEach(function(id, i){
+      schedule(7150 + i * 140, function(){ el(id).classList.add("slr-visible"); });
+    });
+
+    schedule(9200, function(){
+      setScene("conversationScene", 4, "Sending the first text");
+      show("phoneTyping");
+    });
+    schedule(10050, function(){ hide("phoneTyping"); show("message1"); });
+
+    schedule(12400, function(){ show("message2"); status("Sarah replied"); });
+    schedule(13700, function(){ typeThenShow("message3", "Explaining the next step"); });
+    schedule(16300, function(){ typeThenShow("message4", "Offering consultation times"); });
+    schedule(18500, function(){ show("message5"); status("Time selected"); });
+    schedule(19700, function(){ typeThenShow("message6", "Confirming the consultation"); });
+
+    schedule(22600, function(){
+      setScene("alertScene", 5, "Team alerted with the booking");
+    });
+
+    loopTimer = setTimeout(run, 29000);
+  }
+
+  document.getElementById("replayButton").addEventListener("click", run);
+  reset();
+
+  if (window.self === window.top || new URLSearchParams(window.location.search).get("autoplay") === "1") run();
+})();
+</script>
+
+</body>
+</html>

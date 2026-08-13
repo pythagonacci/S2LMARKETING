@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>How it works · 04 — Your team gets the full outcome</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Demo page wrapper only — not part of the drop-in */
+  body { margin:0; background:#EDEEF1; display:flex; justify-content:center; padding:56px 20px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     HOW IT WORKS · 04 — YOUR TEAM GETS THE FULL OUTCOME
+     The finished lead record in the workspace, and the text that hits
+     the owner's phone the moment it resolves. Static — no scripts.
+     Copy from <section class="hiw4"> through the <style> block.
+     ═══════════════════════════════════════════════════════════════ -->
+
+<section class="hiw4" aria-label="A completed lead record in the workspace showing the customer's details, what they need and the next step for the team, alongside the text alert sent to the owner's phone">
+<div class="hiw4-card">
+
+  <div class="hiw4-labels">
+    <span class="hiw4-eyebrow">In your workspace</span>
+    <span class="hiw4-eyebrow hiw4-eyebrow-right">On the owner's phone</span>
+  </div>
+
+  <div class="hiw4-body">
+
+    <!-- Lead record -->
+    <div class="hiw4-record">
+
+      <div class="hiw4-bar">
+        <span class="hiw4-bar-mark"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></span>
+        <span class="hiw4-crumb">Leads</span>
+        <svg class="hiw4-sep" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+        <span class="hiw4-crumb hiw4-crumb-now">Sarah Mitchell</span>
+        <span class="hiw4-chip hiw4-chip-green">Resolved</span>
+      </div>
+
+      <div class="hiw4-record-body">
+
+        <div class="hiw4-head">
+          <div>
+            <div class="hiw4-sub">Website form · 2:41 PM today</div>
+            <h3>Sarah Mitchell</h3>
+          </div>
+          <span class="hiw4-chip hiw4-chip-blue">Consultation booked</span>
+        </div>
+
+        <div class="hiw4-fields">
+          <div class="hiw4-field hiw4-field-wide">
+            <span>Property address</span>
+            <strong>2418 Weatherstone Dr, Cary, NC 27513</strong>
+          </div>
+          <div class="hiw4-field"><span>Phone</span><strong>(919) 555-0148</strong></div>
+          <div class="hiw4-field"><span>Budget</span><strong>$120k–$160k</strong></div>
+          <div class="hiw4-field"><span>Timeline</span><strong>Before next summer</strong></div>
+          <div class="hiw4-field"><span>Consultation</span><strong>Wed · 4:30 PM</strong></div>
+        </div>
+
+        <div class="hiw4-panel">
+          <div class="hiw4-panel-label">What they need</div>
+          <p>Custom gunite pool with an attached spa and tanning ledge. Homeowner confirmed, clear access along the left side of the property. No HOA review required.</p>
+        </div>
+
+        <div class="hiw4-next">
+          <span class="hiw4-next-icon"><svg viewBox="0 0 24 24"><path d="M5 12h13"/><path d="m12 5 7 7-7 7"/></svg></span>
+          <div class="hiw4-next-body">
+            <div class="hiw4-panel-label">Next step for your team</div>
+            <p>Assign a designer to the Wednesday 4:30 PM site visit and confirm the time with Sarah.</p>
+            <div class="hiw4-owner">
+              <span class="hiw4-avatars"><b>MR</b><b class="hiw4-av-2">DT</b></span>
+              Mike R. and the design team were notified
+            </div>
+          </div>
+        </div>
+
+        <div class="hiw4-foot-row">
+          <svg viewBox="0 0 24 24"><path d="M21 14a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"/></svg>
+          Full SMS conversation attached · 8 messages
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Owner's phone -->
+    <div class="hiw4-phone-area">
+      <div class="hiw4-phone">
+        <div class="hiw4-screen">
+          <div class="hiw4-notch"></div>
+          <div class="hiw4-statusbar"><span>2:47</span><span>SMS</span></div>
+
+          <div class="hiw4-phone-head">
+            <span class="hiw4-phone-av">BW</span>
+            <div>
+              <strong>Bluewater Alerts</strong>
+              <span>Text message</span>
+            </div>
+          </div>
+
+          <div class="hiw4-thread">
+            <div class="hiw4-msg">
+              New consultation booked.<br><br>
+              Sarah Mitchell · (919) 555-0148<br>
+              2418 Weatherstone Dr, Cary NC<br><br>
+              Pool, spa and tanning ledge<br>
+              Budget $120k–$160k<br><br>
+              Wed 4:30 PM — assign a designer.
+            </div>
+            <div class="hiw4-stamp">Delivered 2:47 PM</div>
+          </div>
+
+          <div class="hiw4-compose">
+            <div>Text Message</div>
+            <span><svg viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="hiw4-foot">
+    <span class="hiw4-foot-dot"></span>
+    The alert goes out the moment the conversation resolves — not in a summary at the end of the day.
+  </div>
+
+</div>
+</section>
+
+<style>
+/* ══════════ HOW IT WORKS · 04 ══════════ */
+.hiw4{
+  --hiw-bg:#FFFFFF;
+  --hiw-ink:#111318;
+  --hiw-body:#3D4149;
+  --hiw-muted:#6E7480;
+  --hiw-faint:#9AA0AB;
+  --hiw-line:#E7E8EB;
+  --hiw-line-strong:#D6D8DD;
+  --hiw-dark:#16181D;
+  --hiw-blue:#1565F0;
+  --hiw-blue-bg:#EFF4FE;
+  --hiw-green-t:#1F7A40;
+  --hiw-green-bg:#EAF5EE;
+  --hiw-green-line:#CBE7D4;
+  --hiw-sans:'Inter',-apple-system,'Segoe UI',system-ui,sans-serif;
+  font-family:var(--hiw-sans);
+  color:var(--hiw-ink);
+  width:100%;
+  max-width:1000px;
+  -webkit-font-smoothing:antialiased;
+}
+.hiw4 *{box-sizing:border-box;margin:0;padding:0;}
+.hiw4 svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none;}
+
+.hiw4-card{
+  background:var(--hiw-bg);
+  border:1px solid var(--hiw-line);
+  border-radius:14px;
+  padding:30px 34px 26px;
+  box-shadow:0 1px 2px rgba(17,19,24,.05), 0 24px 56px -28px rgba(17,19,24,.18);
+}
+.hiw4-labels{display:flex;justify-content:space-between;gap:16px;margin-bottom:16px;}
+.hiw4-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--hiw-faint);
+}
+.hiw4-eyebrow-right{text-align:right;}
+
+.hiw4-body{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 302px;
+  gap:30px;
+  align-items:center;
+}
+
+/* ── Lead record ── */
+.hiw4-record{
+  border:1px solid var(--hiw-line);
+  border-radius:12px;
+  background:var(--hiw-bg);
+  overflow:hidden;
+  box-shadow:0 1px 2px rgba(17,19,24,.04);
+}
+.hiw4-bar{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 14px;
+  background:#FAFBFC;
+  border-bottom:1px solid var(--hiw-line);
+}
+.hiw4-bar-mark{
+  width:22px;height:22px;border-radius:6px;flex:none;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--hiw-blue);color:#fff;
+}
+.hiw4-bar-mark svg{width:12px;height:12px;}
+.hiw4-crumb{font-size:12px;font-weight:500;color:var(--hiw-muted);}
+.hiw4-crumb-now{color:var(--hiw-ink);font-weight:600;}
+.hiw4-sep{width:12px;height:12px;color:var(--hiw-faint);}
+.hiw4-chip{
+  font-size:11px;font-weight:600;
+  border-radius:6px;padding:4px 9px;white-space:nowrap;
+}
+.hiw4-chip-green{
+  margin-left:auto;
+  color:var(--hiw-green-t);background:var(--hiw-green-bg);
+  border:1px solid var(--hiw-green-line);
+}
+.hiw4-chip-blue{
+  flex:none;
+  color:var(--hiw-blue);background:var(--hiw-blue-bg);
+  border:1px solid #D8E4FC;
+}
+
+.hiw4-record-body{padding:18px 20px 16px;}
+.hiw4-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;}
+.hiw4-sub{font-size:11.5px;color:var(--hiw-muted);}
+.hiw4-head h3{margin-top:5px;font-size:19px;font-weight:700;letter-spacing:-.025em;}
+
+.hiw4-fields{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;
+  margin-top:16px;
+}
+.hiw4-field{
+  min-width:0;
+  border:1px solid var(--hiw-line);border-radius:10px;
+  padding:10px 13px;
+}
+.hiw4-field-wide{grid-column:1 / -1;}
+.hiw4-field span{display:block;font-size:11.5px;font-weight:500;color:var(--hiw-muted);}
+.hiw4-field strong{
+  display:block;margin-top:4px;
+  font-size:14px;font-weight:600;letter-spacing:-.015em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+
+.hiw4-panel-label{
+  font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--hiw-faint);
+}
+.hiw4-panel{
+  margin-top:12px;
+  border:1px solid var(--hiw-line);border-radius:10px;
+  padding:12px 14px;background:#FCFCFD;
+}
+.hiw4-panel p{margin-top:6px;font-size:13px;line-height:1.55;color:var(--hiw-body);}
+
+.hiw4-next{
+  display:flex;gap:12px;
+  margin-top:12px;
+  border:1px solid var(--hiw-green-line);border-radius:10px;
+  padding:13px 15px;background:#F7FBF8;
+}
+.hiw4-next-icon{
+  width:26px;height:26px;border-radius:8px;flex:none;margin-top:1px;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--hiw-green-bg);color:var(--hiw-green-t);
+  border:1px solid var(--hiw-green-line);
+}
+.hiw4-next-icon svg{width:14px;height:14px;stroke-width:2;}
+.hiw4-next-body{flex:1;min-width:0;}
+.hiw4-next-body p{
+  margin-top:6px;
+  font-size:13.5px;line-height:1.5;font-weight:500;color:var(--hiw-ink);
+}
+.hiw4-owner{
+  display:flex;align-items:center;gap:9px;
+  margin-top:11px;padding-top:10px;
+  border-top:1px solid #E2EFE7;
+  font-size:11.5px;color:var(--hiw-muted);
+}
+.hiw4-avatars{display:inline-flex;flex:none;}
+.hiw4-avatars b{
+  width:22px;height:22px;border-radius:50%;
+  background:#EDEFF2;color:var(--hiw-body);border:1.5px solid #F7FBF8;
+  font-size:8.5px;font-weight:700;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.hiw4-avatars b + b{margin-left:-4px;}
+.hiw4-av-2{background:var(--hiw-blue) !important;color:#fff !important;}
+
+.hiw4-foot-row{
+  display:flex;align-items:center;gap:8px;
+  margin-top:14px;padding-top:12px;
+  border-top:1px solid #F1F2F4;
+  font-size:12px;color:var(--hiw-muted);
+}
+.hiw4-foot-row svg{width:14px;height:14px;color:var(--hiw-faint);}
+
+/* ── Owner's phone (lock screen) ── */
+.hiw4-phone-area{display:flex;justify-content:center;min-width:0;}
+.hiw4-phone{
+  width:100%;height:520px;
+  border-radius:38px;padding:8px;
+  background:var(--hiw-dark);
+  box-shadow:0 18px 40px -20px rgba(17,19,24,.45);
+}
+.hiw4-screen{
+  position:relative;
+  display:flex;flex-direction:column;
+  width:100%;height:100%;
+  overflow:hidden;border-radius:31px;
+  background:#FBFBFC;
+}
+.hiw4-notch{
+  position:absolute;top:0;left:50%;z-index:3;
+  width:92px;height:19px;
+  border-radius:0 0 13px 13px;
+  background:var(--hiw-dark);
+  transform:translateX(-50%);
+}
+.hiw4-statusbar{
+  display:flex;justify-content:space-between;
+  padding:7px 18px 5px;
+  font-size:10px;font-weight:500;color:var(--hiw-faint);
+}
+.hiw4-phone-head{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 13px;
+  border-bottom:1px solid var(--hiw-line);
+  background:var(--hiw-bg);
+}
+.hiw4-phone-av{
+  width:34px;height:34px;border-radius:50%;flex:none;
+  background:var(--hiw-blue);color:#fff;
+  font-size:10.5px;font-weight:700;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.hiw4-phone-head > div{min-width:0;}
+.hiw4-phone-head > div strong{display:block;font-size:13px;font-weight:600;letter-spacing:-.015em;}
+.hiw4-phone-head > div span{display:block;margin-top:1px;font-size:10.5px;color:var(--hiw-muted);}
+.hiw4-thread{
+  flex:1;
+  display:flex;flex-direction:column;align-items:flex-start;
+  padding:14px 12px;
+}
+.hiw4-msg{
+  max-width:92%;
+  border:1px solid var(--hiw-line);
+  background:var(--hiw-bg);color:var(--hiw-body);
+  border-radius:15px 15px 15px 4px;
+  padding:12px 13px;
+  font-size:12.5px;line-height:1.5;
+}
+.hiw4-stamp{
+  margin:7px 0 0 4px;
+  font-size:10.5px;color:var(--hiw-faint);
+}
+.hiw4-compose{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 10px 11px;
+  border-top:1px solid var(--hiw-line);
+  background:var(--hiw-bg);
+}
+.hiw4-compose div{
+  flex:1;
+  border:1px solid var(--hiw-line-strong);border-radius:999px;
+  padding:8px 12px;
+  font-size:11px;color:var(--hiw-faint);
+}
+.hiw4-compose > span{
+  width:28px;height:28px;border-radius:50%;flex:none;
+  background:var(--hiw-dark);color:#fff;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.hiw4-compose svg{width:13px;height:13px;}
+
+/* Card footer */
+.hiw4-foot{
+  display:flex;align-items:flex-start;gap:9px;
+  margin-top:24px;padding-top:16px;
+  border-top:1px solid #F1F2F4;
+  font-size:12.5px;line-height:1.5;color:var(--hiw-muted);
+}
+.hiw4-foot-dot{width:6px;height:6px;margin-top:6px;border-radius:50%;background:var(--hiw-blue);flex:none;}
+
+/* Responsive */
+@media (max-width:880px){
+  .hiw4-card{padding:24px 22px 22px;}
+  .hiw4-body{grid-template-columns:1fr;gap:22px;}
+  .hiw4-labels{display:none;}
+  .hiw4-phone{width:min(100%,300px);margin:0 auto;}
+}
+@media (max-width:520px){
+  .hiw4-fields{grid-template-columns:1fr;}
+  .hiw4-head{flex-direction:column;gap:10px;}
+}
+</style>
+
+</body>
+</html>
