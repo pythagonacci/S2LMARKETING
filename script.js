@@ -13,6 +13,7 @@
   const formStatus = document.querySelector('[data-form-status]');
   const submitButton = document.querySelector('[data-submit-button]');
   const submitLabel = document.querySelector('[data-submit-label]');
+  const frameFitState = new WeakMap();
 
   if (year) year.textContent = new Date().getFullYear();
 
@@ -167,6 +168,17 @@
       const doc = frame.contentDocument;
       if (!doc) return;
 
+      const target = doc.body || doc.documentElement;
+      const existingState = frameFitState.get(frame);
+      if (existingState && existingState.doc === doc && existingState.target === target) {
+        existingState.measure();
+        return;
+      }
+
+      if (existingState && existingState.resizeObserver) {
+        existingState.resizeObserver.disconnect();
+      }
+
       const measure = function () {
         const bodyHeight = doc.body ? doc.body.scrollHeight : 0;
         const rootHeight = doc.documentElement ? doc.documentElement.scrollHeight : 0;
@@ -178,13 +190,15 @@
 
       measure();
 
+      let resizeObserver = null;
       if ('ResizeObserver' in window) {
-        const target = doc.body || doc.documentElement;
         if (target) {
-          const resizeObserver = new ResizeObserver(measure);
+          resizeObserver = new ResizeObserver(measure);
           resizeObserver.observe(target);
         }
       }
+
+      frameFitState.set(frame, { doc, target, measure, resizeObserver });
 
       if (doc.fonts && doc.fonts.ready) {
         doc.fonts.ready.then(measure);
@@ -198,12 +212,18 @@
   }
 
   frames.forEach(function (frame) {
-    frame.addEventListener('load', function () {
+    const initializeFrame = function () {
       fitFrame(frame);
       if (frame === heroFrame) {
         heroFrame.dataset.loaded = 'true';
         startHeroVisualWhenReady();
       }
+    };
+
+    frame.addEventListener('load', initializeFrame);
+    window.requestAnimationFrame(initializeFrame);
+    [100, 300, 750, 1500].forEach(function (delay) {
+      window.setTimeout(initializeFrame, delay);
     });
   });
 })();
